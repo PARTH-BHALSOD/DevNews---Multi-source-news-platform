@@ -1,0 +1,4 @@
+pymongo>=4.8
+certifi>=2024.8.30
+python-dotenv>=1.0
+requests>=2.32

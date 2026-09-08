@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "devnews-backend",
+  "version": "2.0.0",
+  "description": "Secure MERN backend for DevNews with authentication, posts, favorites and live tech news ingestion.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "check": "node --check server.js && node --check controllers/authController.js && node --check controllers/postController.js && node --check middleware/auth.js && node --check models/User.js && node --check models/Post.js && node --check routes/authRouter.js && node --check routes/postRouter.js",
+    "worker": "python3 workers/news_worker.py",
+    "promote-admin": "python3 scripts/promote_admin.py",
+    "health-check": "python3 scripts/health_check.py"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

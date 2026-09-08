@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="DevNews - the daily signal for builders.">
+    <title>DevNews | The builder's daily signal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="/" aria-label="DevNews home"><span class="brand-mark">/</span>devnews</a>
+        <nav class="nav-actions" aria-label="Account navigation">
+          <button class="text-button hidden" id="favorites-button">Saved <span class="count-badge" id="favorites-count">0</span></button>
+          <button class="text-button hidden" id="account-button"></button>
+          <button class="button button-dark" id="auth-button">Sign in</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> Fresh from the developer ecosystem</p>
+            <h1>News for people<br><em>who build.</em></h1>
+            <p class="hero-copy">A focused feed of the tools, ideas, and releases moving technology forward.</p>
+          </div>
+          <div class="hero-note">
+            <span class="mono-label">ISSUE 001 / EVERY DAY</span>
+            <p>No noise. Just the signal worth your attention.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container feed-section" aria-labelledby="feed-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">The latest</p>
+            <h2 id="feed-title">What's happening</h2>
+          </div>
+          <form class="search-form" id="search-form">
+            <label class="sr-only" for="search-input">Search stories</label>
+            <input id="search-input" type="search" placeholder="Search stories..." autocomplete="off">
+            <button class="search-button" type="submit" aria-label="Search stories">↗</button>
+          </form>
+        </div>
+        <div class="tag-bar" id="tag-bar" aria-label="Filter by topic"></div>
+        <div class="status-message" id="feed-status" role="status">Loading the latest stories...</div>
+        <div class="access-panel hidden" id="access-panel">
+          <div class="access-panel-mark" aria-hidden="true">/</div>
+          <div class="access-panel-copy">
+            <p class="eyebrow">A better way to keep up</p>
+            <h3>Good stories<br><em>find you here.</em></h3>
+            <p>Join a focused reading room for the tools, ideas, and releases shaping what comes next.</p>
+            <button class="button button-dark" id="access-button" type="button">Enter the reading room ↗</button>
+          </div>
+          <div class="access-panel-index mono-label">DEVNEWS / 001<br>CURATED DAILY</div>
+        </div>
+        <div class="news-grid" id="news-grid"></div>
+        <div class="pagination hidden" id="pagination">
+          <button class="button button-outline" id="previous-page">← Newer</button>
+          <span class="mono-label" id="page-label"></span>
+          <button class="button button-outline" id="next-page">Older →</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-main">
+        <div class="footer-intro">
+          <a class="brand" href="/" aria-label="DevNews home"><span class="brand-mark">/</span>devnews</a>
+          <p>The signal behind<br><em>what's next.</em></p>
+        </div>
+        <div class="footer-column">
+          <span class="mono-label">The desk</span>
+          <span>Curated daily</span>
+          <span>Built for curious minds</span>
+          <span>Issue 001 / 2026</span>
+        </div>
+        <div class="footer-stamp" aria-hidden="true">↗</div>
+      </div>
+      <div class="container footer-bottom">
+        <span class="mono-label">DevNews / Independent technology reading</span>
+        <span class="mono-label">© 2026 DevNews</span>
+      </div>
+    </footer>
+
+    <div class="modal hidden" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <div class="modal-card">
+        <button class="modal-close" data-close-modal aria-label="Close">×</button>
+        <p class="eyebrow">Your reading list</p>
+        <h2 id="auth-title">Sign in to DevNews</h2>
+        <div class="auth-tabs">
+          <button class="tab active" data-auth-tab="login">Sign in</button>
+          <button class="tab" data-auth-tab="register">Create account</button>
+        </div>
+        <form id="login-form" class="auth-form">
+          <label>Email<input name="email" type="email" required autocomplete="email"></label>
+          <label>Password<input name="password" type="password" required autocomplete="current-password"></label>
+          <button class="button button-dark full-width" type="submit">Sign in</button>
+        </form>
+        <form id="register-form" class="auth-form hidden">
+          <label>Name<input name="name" type="text" required minlength="2" autocomplete="name"></label>
+          <label>Email<input name="email" type="email" required autocomplete="email"></label>
+          <label>Password<input name="password" type="password" required minlength="8" autocomplete="new-password"></label>
+          <button class="button button-dark full-width" type="submit">Create account</button>
+        </form>
+        <p class="form-message" id="auth-message"></p>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="account-modal" role="dialog" aria-modal="true" aria-labelledby="account-title">
+      <div class="modal-card">
+        <button class="modal-close" data-close-modal aria-label="Close">×</button>
+        <p class="eyebrow">Account</p>
+        <h2 id="account-title">Your profile</h2>
+        <form id="profile-form" class="auth-form">
+          <label>Name<input name="name" type="text" required minlength="2"></label>
+          <label>Email<input name="email" type="email" required></label>
+          <button class="button button-dark full-width" type="submit">Update profile</button>
+        </form>
+        <details class="account-details">
+          <summary>Change password</summary>
+          <form id="password-form" class="auth-form">
+            <label>Current password<input name="currentPassword" type="password" required></label>
+            <label>New password<input name="newPassword" type="password" required minlength="8"></label>
+            <button class="button button-outline full-width" type="submit">Change password</button>
+          </form>
+        </details>
+        <div class="account-actions">
+          <button class="button button-outline" id="logout-button">Sign out</button>
+          <button class="danger-button" id="delete-account-button">Delete account</button>
+        </div>
+        <p class="form-message" id="account-message"></p>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="admin-modal" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+      <div class="modal-card modal-wide">
+        <button class="modal-close" data-close-modal aria-label="Close">×</button>
+        <p class="eyebrow">Admin desk</p>
+        <h2 id="admin-title">Publish a story</h2>
+        <form id="post-form" class="post-form">
+          <input type="hidden" name="postId">
+          <label>Headline<input name="title" type="text" required maxlength="300"></label>
+          <label>Story URL<input name="link" type="url" required></label>
+          <div class="form-row">
+            <label>Source<input name="source" type="text" maxlength="80"></label>
+            <label>Topics <span class="hint">(comma separated)</span><input name="tags" type="text"></label>
+          </div>
+          <div class="form-actions">
+            <button class="button button-dark" type="submit" id="post-submit">Publish story</button>
+            <button class="button button-outline hidden" type="button" id="cancel-edit">Cancel edit</button>
+            <button class="button button-outline" type="button" id="admin-logout-button">Sign out</button>
+          </div>
+        </form>
+        <p class="form-message" id="admin-message"></p>
+      </div>
+    </div>
+    <script src="/js/app.js" defer></script>
+  </body>
+</html>
