@@ -31,7 +31,7 @@ A production-minded Express + MongoDB backend for a MERN tech-news application.
 
 3. Fill in `MONGO_URI`, `COOKIE_SECRET`, `ADMIN_ID`, and `NEWS_API_KEY`.
 
-4. Set `FRONTEND_URL` to the exact frontend origin(s), separated by commas.
+4. Set `FRONTEND_URL` (or `CORS_ORIGINS`) to the exact frontend origin(s), separated by commas. Origins are normalized automatically, so either `https://example.com` or `https://example.com/` is valid. On Vercel, the current deployment URL is also allowed automatically.
 
 5. Install the Python dependencies (used by the admin-promotion script and the news worker):
 
