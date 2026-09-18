@@ -24,10 +24,30 @@ app.use(express.urlencoded({ extended: false, limit: '1mb' }));
 app.use(cookieParser(COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const normalizeOrigin = (value) => {
+  try {
+    const url = new URL(value.trim());
+    if (!['http:', 'https:'].includes(url.protocol)) return null;
+    return url.origin;
+  } catch {
+    return null;
+  }
+};
+
+const configuredOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.CORS_ORIGINS,
+  process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
+]
+  .filter(Boolean)
+  .flatMap((origins) => origins.split(','))
+  .map(normalizeOrigin)
+  .filter(Boolean);
+
 const allowedOrigins = [
   'http://localhost:5001',
   'http://127.0.0.1:5001',
-  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',').map((url) => url.trim()).filter(Boolean) : []),
+  ...configuredOrigins,
 ];
 
 app.use(cors({
@@ -37,6 +57,7 @@ app.use(cors({
       return callback(null, true);
     }
 
+    console.warn(`Rejected CORS origin: ${origin}`);
     return callback(new Error('CORS origin not allowed.'));
   },
   credentials: true,
