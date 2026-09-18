@@ -1,0 +1,28 @@
+name: Hourly News Fetcher
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs at minute 0 of every hour
+  workflow_dispatch: # Allows you to run it manually by clicking a button in GitHub
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run News Worker
+        env:
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          ADMIN_ID: ${{ secrets.ADMIN_ID }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: python workers/news_worker.py --once

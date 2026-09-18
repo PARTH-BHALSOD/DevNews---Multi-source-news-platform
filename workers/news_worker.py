@@ -1,20 +1,6 @@
 #!/usr/bin/env python3
 """
-DevNews live ingestion worker.
-
-Fetches tech articles from NewsAPI + DEV Community and inserts new ones
-into the `posts` collection (same collection the Node app reads from).
-
-Run once:
     python3 workers/news_worker.py --once
-
-Run continuously (fetches immediately, then every hour on the hour,
-matching the old node-cron '0 * * * *' schedule):
-    python3 workers/news_worker.py
-
-Replaces workers/news_worker.js. This is a separate OS process from the
-Express server -- it is NOT imported by server.js, so the Node app starts
-and runs completely independently of whether this script is running.
 """
 import argparse
 import os

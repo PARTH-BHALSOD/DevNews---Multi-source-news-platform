@@ -7,8 +7,6 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 const authRouter = require('./routes/authRouter');
 const postRouter = require('./routes/postRouter');
-// News ingestion now runs as a separate process: workers/news_worker.py
-// (see README "News worker" section) -- it is intentionally not required here.
 
 const app = express();
 const PORT = Number(process.env.PORT) || 5001;
@@ -59,7 +57,7 @@ const start = async () => {
   try {
     await mongoose.connect(MONGO_URL);
     console.log('Connected to MongoDB');
-    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on address http://localhost:${PORT}`));
   } catch (error) {
     console.error('MongoDB connection error:', error.message);
     process.exit(1);
